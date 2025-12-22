@@ -1,0 +1,92 @@
+.custom-navbar {
+  background-color: #616161;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+}
+
+
+
+#canvas {
+  background: whitesmoke;
+  width: 100%;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+/* Heading overlay */
+.heading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  color: whitesmoke;
+  font-weight: 300;
+  font-size: 40px;
+
+
+}
+
+.heading h1 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+.heading h2 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 200;
+}
+
+.heading h1,
+.heading h2 {
+  margin: 0;           /* remove default spacing */
+  text-align: center;  /* optional, just to be safe */
+  color: black;
+}
+
+.moreInfo {
+  background-color: #111111;
+  color: whitesmoke;
+  border: 2px solid red;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  margin: 20px 2px;
+  cursor: pointer;
+  border-radius: 7px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 200;
+
+    /* New for smooth animation */
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+
+/* Hover effect */
+.moreInfo:hover {
+  transform: scale(1.05); /* Slightly bigger */
+  box-shadow: 0 0 15px red, 0 0 25px red; /* subtle glow */
+}
+
+section {
+  background-color: whitesmoke;
+  padding: 50px;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 200;
+}
+
+#about h1 {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
