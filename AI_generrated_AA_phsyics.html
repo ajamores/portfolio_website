@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battery Physics Simulation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #111;
+            color: white;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .title {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 2.5em;
+            background: linear-gradient(90deg, #00ffcc, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .simulation-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .canvas-container {
+            position: relative;
+            border: 2px solid #333;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
+        }
+        
+        #batteryCanvas {
+            display: block;
+        }
+        
+        .battery-label {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        
+        .positive-side {
+            left: 25%;
+            color: #ff4444;
+        }
+        
+        .negative-side {
+            right: 25%;
+            color: #4444ff;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            background: linear-gradient(45deg, #0066ff, #00ccff);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,102,255,0.4);
+        }
+        
+        .explanation {
+            background: rgba(255,255,255,0.05);
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+        
+        .particle-key {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .key-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .key-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        
+        .electron-dot {
+            background: #00ccff;
+            box-shadow: 0 0 10px #00ccff;
+        }
+        
+        .ion-dot {
+            background: #ff4444;
+            box-shadow: 0 0 10px #ff4444;
+        }
+        
+        .wire-dot {
+            background: #00ff44;
+            box-shadow: 0 0 10px #00ff44;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">AA Battery Physics Simulation</h1>
+        
+        <div class="simulation-area">
+            <div class="canvas-container">
+                <canvas id="batteryCanvas" width="1000" height="500"></canvas>
+                <div class="battery-label positive-side">CATHODE (+)</div>
+                <div class="battery-label negative-side">ANODE (-)</div>
+            </div>
+            
+            <div class="controls">
+                <button onclick="startBattery()">Start Battery</button>
+                <button onclick="stopBattery()">Stop Battery</button>
+                <button onclick="resetSimulation()">Reset</button>
+                <button onclick="toggleSlowMotion()">Slow Motion</button>
+                <button onclick="addLoad()">Add Light Bulb</button>
+            </div>
+            
+            <div class="particle-key">
+                <div class="key-item">
+                    <div class="key-dot electron-dot"></div>
+                    <span>Electrons (-)</span>
+                </div>
+                <div class="key-item">
+                    <div class="key-dot ion-dot"></div>
+                    <span>Positive Ions (+)</span>
+                </div>
+                <div class="key-item">
+                    <div class="key-dot wire-dot"></div>
+                    <span>Current in Wire</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="explanation">
+            <h2>How AA Batteries Work:</h2>
+            <p><strong>1. Chemical Reaction at Anode (-):</strong> Zinc releases electrons and positive zinc ions.</p>
+            <p><strong>2. Electron Flow:</strong> Electrons travel through the wire (creating electricity) to power devices.</p>
+            <p><strong>3. Ion Flow:</strong> Positive ions travel through the electrolyte.</p>
+            <p><strong>4. Reaction at Cathode (+):</strong> Electrons combine with manganese dioxide and positive ions.</p>
+            <p><strong>Key Insight:</strong> The circuit must be complete! Electrons flow through the wire, ions flow through the electrolyte.</p>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('batteryCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Battery state
+        let isBatteryActive = false;
+        let isSlowMotion = false;
+        let hasLoad = false;
+        let animationId = null;
+        
+        // Battery dimensions
+        const battery = {
+            x: 100,
+            y: canvas.height / 2 - 100,
+            width: 800,
+            height: 200,
+            anodeX: 0,      // Negative side
+            cathodeX: 0,    // Positive side
+            electrolyteY: 0
+        };
+        
+        // Update battery dimensions
+        battery.anodeX = battery.x + 50;
+        battery.cathodeX = battery.x + battery.width - 50;
+        battery.electrolyteY = battery.y + battery.height / 2;
+        
+        // Particles arrays
+        const electrons = [];
+        const positiveIons = [];
+        const wireElectrons = [];
+        
+        // Particle types
+        class Electron {
+            constructor(x, y, isWire = false) {
+                this.x = x;
+                this.y = y;
+                this.radius = isWire ? 4 : 6;
+                this.speed = isWire ? (Math.random() * 3 + 2) : (Math.random() * 2 + 1);
+                this.color = isWire ? '#00ff44' : '#00ccff';
+                this.isWire = isWire;
+                this.direction = isWire ? 1 : (Math.random() > 0.5 ? 1 : -1);
+                this.glow = true;
+                this.opacity = 0.8 + Math.random() * 0.2;
+            }
+            
+            update() {
+                if (this.isWire && isBatteryActive) {
+                    // Wire electrons move in circuit
+                    this.x += this.speed * this.direction;
+                    
+                    // Loop around the circuit
+                    if (this.x > battery.cathodeX + 200) {
+                        this.x = battery.anodeX - 50;
+                        this.y = battery.electrolyteY + Math.random() * 100 - 50;
+                    }
+                } else if (!this.isWire) {
+                    // Battery electrons
+                    if (isBatteryActive) {
+                        this.x += this.speed * this.direction * 0.5;
+                    }
+                    
+                    // Bounce within battery
+                    if (this.x < battery.anodeX || this.x > battery.cathodeX) {
+                        this.direction *= -1;
+                    }
+                    
+                    // Random vertical movement
+                    this.y += (Math.random() - 0.5) * 2;
+                    
+                    // Keep within battery
+                    this.y = Math.max(battery.y + 20, Math.min(battery.y + battery.height - 20, this.y));
+                }
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                
+                if (this.glow) {
+                    ctx.shadowColor = this.color;
+                    ctx.shadowBlur = 15;
+                }
+                
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.shadowBlur = 0;
+                
+                // Negative sign for electrons
+                if (!this.isWire) {
+                    ctx.fillStyle = 'white';
+                    ctx.font = '10px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText('-', this.x, this.y);
+                }
+            }
+        }
+        
+        class PositiveIon {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.radius = 8;
+                this.speed = Math.random() * 1 + 0.5;
+                this.color = '#ff4444';
+                this.direction = Math.random() > 0.5 ? 1 : -1;
+                this.opacity = 0.9;
+            }
+            
+            update() {
+                if (isBatteryActive) {
+                    // Ions move through electrolyte
+                    this.y += this.speed * this.direction;
+                    
+                    // Bounce in electrolyte
+                    if (this.y < battery.electrolyteY - 40 || this.y > battery.electrolyteY + 40) {
+                        this.direction *= -1;
+                    }
+                    
+                    // Horizontal drift toward reaction sites
+                    if (this.x < battery.anodeX + 100) {
+                        this.x += 0.5; // Drift toward anode
+                    } else if (this.x > battery.cathodeX - 100) {
+                        this.x -= 0.5; // Drift toward cathode
+                    }
+                }
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = 15;
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.opacity;
+                ctx.fill();
+                ctx.globalAlpha = 1;
+                ctx.shadowBlur = 0;
+                
+                // Plus sign for positive ions
+                ctx.fillStyle = 'white';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('+', this.x, this.y);
+            }
+        }
+        
+        // Initialize particles
+        function initParticles() {
+            electrons.length = 0;
+            positiveIons.length = 0;
+            wireElectrons.length = 0;
+            
+            // Create electrons at anode (negative side)
+            for (let i = 0; i < 30; i++) {
+                electrons.push(new Electron(
+                    battery.anodeX + Math.random() * 100,
+                    battery.y + 50 + Math.random() * 100
+                ));
+            }
+            
+            // Create positive ions in electrolyte
+            for (let i = 0; i < 25; i++) {
+                positiveIons.push(new PositiveIon(
+                    battery.anodeX + 50 + Math.random() * 700,
+                    battery.electrolyteY + Math.random() * 80 - 40
+                ));
+            }
+            
+            // Create wire electrons
+            for (let i = 0; i < 20; i++) {
+                wireElectrons.push(new Electron(
+                    battery.anodeX - 50 + Math.random() * 100,
+                    battery.electrolyteY + Math.random() * 100 - 50,
+                    true
+                ));
+            }
+        }
+        
+        // Draw the battery
+        function drawBattery() {
+            // Battery case
+            ctx.fillStyle = '#333';
+            ctx.fillRect(battery.x, battery.y, battery.width, battery.height);
+            
+            // Anode (negative terminal - Zinc)
+            ctx.fillStyle = '#4444ff';
+            ctx.fillRect(battery.x + 20, battery.y + 20, 30, battery.height - 40);
+            
+            // Cathode (positive terminal - Manganese dioxide)
+            ctx.fillStyle = '#ff4444';
+            ctx.fillRect(battery.x + battery.width - 50, battery.y + 20, 30, battery.height - 40);
+            
+            // Electrolyte area
+            ctx.fillStyle = 'rgba(255, 255, 100, 0.2)';
+            ctx.fillRect(battery.x + 60, battery.electrolyteY - 40, battery.width - 120, 80);
+            
+            // Wire from anode to load
+            ctx.strokeStyle = '#00ff44';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(battery.anodeX, battery.electrolyteY);
+            ctx.lineTo(battery.anodeX - 100, battery.electrolyteY);
+            
+            if (hasLoad) {
+                // Draw light bulb
+                ctx.arc(battery.anodeX - 150, battery.electrolyteY, 30, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 100, 0.3)';
+                ctx.fill();
+            }
+            
+            ctx.lineTo(battery.cathodeX + 100, battery.electrolyteY);
+            ctx.lineTo(battery.cathodeX, battery.electrolyteY);
+            ctx.stroke();
+            
+            // Labels
+            ctx.fillStyle = 'white';
+            ctx.font = '16px Arial';
+            ctx.textAlign = 'center';
+            
+            ctx.fillText('Zinc Anode', battery.anodeX - 15, battery.y - 10);
+            ctx.fillText('MnO₂ Cathode', battery.cathodeX + 15, battery.y - 10);
+            ctx.fillText('Electrolyte', battery.x + battery.width / 2, battery.electrolyteY - 60);
+            
+            if (hasLoad) {
+                ctx.fillText('Light Bulb', battery.anodeX - 150, battery.electrolyteY - 50);
+            }
+        }
+        
+        // Draw chemical reactions
+        function drawReactions() {
+            if (!isBatteryActive) return;
+            
+            // Reaction at anode: Zn → Zn²⁺ + 2e⁻
+            ctx.fillStyle = 'rgba(100, 100, 255, 0.3)';
+            ctx.beginPath();
+            ctx.arc(battery.anodeX + 15, battery.y + battery.height / 2, 40, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillStyle = 'white';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Zn → Zn²⁺ + 2e⁻', battery.anodeX + 15, battery.y + battery.height / 2);
+            
+            // Reaction at cathode: 2MnO₂ + 2e⁻ + 2H⁺ → Mn₂O₃ + H₂O
+            ctx.fillStyle = 'rgba(255, 100, 100, 0.3)';
+            ctx.beginPath();
+            ctx.arc(battery.cathodeX - 15, battery.y + battery.height / 2, 40, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.fillText('2MnO₂ + 2e⁻ → Mn₂O₃', battery.cathodeX - 15, battery.y + battery.height / 2 - 10);
+            ctx.fillText('+ 2H⁺ → H₂O', battery.cathodeX - 15, battery.y + battery.height / 2 + 10);
+        }
+        
+        // Animation loop
+        function animate() {
+            // Clear with slight fade for trails
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            drawBattery();
+            drawReactions();
+            
+            // Update and draw all particles
+            positiveIons.forEach(ion => {
+                ion.update();
+                ion.draw();
+            });
+            
+            electrons.forEach(electron => {
+                electron.update();
+                electron.draw();
+            });
+            
+            wireElectrons.forEach(electron => {
+                electron.update();
+                electron.draw();
+            });
+            
+            // Draw flow arrows if active
+            if (isBatteryActive) {
+                drawFlowArrows();
+            }
+            
+            if (isBatteryActive || animationId) {
+                const delay = isSlowMotion ? 100 : 16;
+                setTimeout(() => {
+                    animationId = requestAnimationFrame(animate);
+                }, delay);
+            }
+        }
+        
+        function drawFlowArrows() {
+            // Electron flow arrow
+            ctx.strokeStyle = '#00ccff';
+            ctx.fillStyle = '#00ccff';
+            ctx.lineWidth = 2;
+            
+            drawArrow(battery.anodeX - 80, battery.electrolyteY - 30, 
+                     battery.anodeX - 180, battery.electrolyteY - 30, 10);
+            
+            ctx.fillText('Electron Flow', battery.anodeX - 130, battery.electrolyteY - 45);
+            
+            // Ion flow arrow
+            ctx.strokeStyle = '#ff4444';
+            ctx.fillStyle = '#ff4444';
+            
+            drawArrow(battery.anodeX + 50, battery.electrolyteY + 50,
+                     battery.cathodeX - 50, battery.electrolyteY + 50, 10);
+            
+            ctx.fillText('Ion Flow', battery.x + battery.width / 2, battery.electrolyteY + 75);
+        }
+        
+        function drawArrow(fromX, fromY, toX, toY, size) {
+            const angle = Math.atan2(toY - fromY, toX - fromX);
+            
+            ctx.beginPath();
+            ctx.moveTo(fromX, fromY);
+            ctx.lineTo(toX, toY);
+            ctx.stroke();
+            
+            // Arrowhead
+            ctx.beginPath();
+            ctx.moveTo(toX, toY);
+            ctx.lineTo(toX - size * Math.cos(angle - Math.PI/6), 
+                      toY - size * Math.sin(angle - Math.PI/6));
+            ctx.lineTo(toX - size * Math.cos(angle + Math.PI/6), 
+                      toY - size * Math.sin(angle + Math.PI/6));
+            ctx.closePath();
+            ctx.fill();
+        }
+        
+        // Control functions
+        function startBattery() {
+            if (!isBatteryActive) {
+                isBatteryActive = true;
+                animate();
+            }
+        }
+        
+        function stopBattery() {
+            isBatteryActive = false;
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+                animationId = null;
+            }
+        }
+        
+        function resetSimulation() {
+            stopBattery();
+            initParticles();
+            animate();
+        }
+        
+        function toggleSlowMotion() {
+            isSlowMotion = !isSlowMotion;
+        }
+        
+        function addLoad() {
+            hasLoad = !hasLoad;
+        }
+        
+        // Initialize
+        initParticles();
+        animate();
+    </script>
+</body>
+</html>

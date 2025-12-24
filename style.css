@@ -1,92 +1,201 @@
-.custom-navbar {
-  background-color: #616161;
-  font-family: 'Inter', sans-serif;
-  font-weight: 300;
+/* 
+  ============================================
+  CSS RESET / GLOBAL BASELINE STYLES
+  ============================================
+  
+  PURPOSE:
+  - Remove browser inconsistencies and defaults
+  - Create consistent baseline for all elements
+  - Simplify responsive layout calculations
+  
+  BREAKDOWN:
+  * margin: 0, padding: 0    → Eliminates default browser spacing
+  * box-sizing: border-box   → Padding/border included in element dimensions
+  * font-family              → Sets default typography stack
+  * text-decoration: none    → Removes default link underlines
+  * scroll-behavior: smooth  → Enables smooth scrolling for anchor links
+  * list-style: none         → Removes default list bullets/numbers
+  
+  USAGE:
+  Add custom styles after this reset. All elements now start from zero.
+  ============================================
+*/
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins';
+  text-decoration: none;
+  scroll-behavior: smooth;
+  list-style: none;
 }
 
 
+header{
+  position: fixed; /*keep position at the top even when scrolling down*/
+  top: 1rem; /*scalable and consistent therefore rem */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 3rem;
+  z-index: 1000;
+}
 
-#canvas {
-  background: whitesmoke;
+.logo{
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-wrap: nowrap;
+  transition: 0.3 ease-in-out;
+}
+
+.logo:hover{
+  transform:  scale(1.1);
+}
+
+.nav-links{
+  display: flex;
+  gap: 2rem;
+}
+
+li a{
+  position: relative;
+  color: white;
+  font-weight: 300;
+}
+
+li a::before{
+  position: absolute;
+  content: '';
+  width: 0;
+  left: 0;
+  top:25px;
+  height: 5px;
+  border-radius: 1rem;
+  transition: 0.3s ease-in-out;
+  background: linear-gradient(to right, rgb(0,157,255), rgb(255,0,255));
+
+}
+
+li a:hover::before{
   width: 100%;
 }
 
-html {
-  scroll-behavior: smooth;
+.visit-btn{
+  padding: 0.8rem 1.5rem;
+  border-radius: 3rem;
+  border: none;
+  font-weight: 500;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+  text-wrap: nowrap;
+  transition: 0.3s ease-in-out;
+  background: linear-gradient(to right, rgb(0,157,255), rgb(255,0,255) );
 }
 
+.visit-btn:hover{
+  background: linear-gradient(to right,  rgb(255,0,255), rgb(0,157,255) );
+  transform: scale(1.03);
+}
 
-/* Heading overlay */
-.heading {
-  position: absolute;
-  inset: 0;
+#menu-icon{
+  font-size: 2rem;
+  display: none;
+}
+
+section{
+  min-height: 100vh;
+  padding: 8rem 12%;
+  width: 100%;
+  position: relative;
+}
+
+.about{
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 2;
-  color: whitesmoke;
-  font-weight: 300;
-  font-size: 40px;
-
-
 }
 
-.heading h1 {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  letter-spacing: -0.02em;
+.about .about-container{
+  display: flex;
+  align-items: center;
+  gap: 10rem;
 }
 
-.heading h2 {
-  font-family: 'Inter', sans-serif;
-  font-weight: 200;
+.about img{
+  width: 30vw;
+  border-radius: 50%;
 }
 
-.heading h1,
-.heading h2 {
-  margin: 0;           /* remove default spacing */
-  text-align: center;  /* optional, just to be safe */
-  color: black;
-}
-
-.moreInfo {
-  background-color: #111111;
-  color: whitesmoke;
-  border: 2px solid red;
-  padding: 15px 32px;
+.info-box{
+  display: flex;
+  flex-direction: column;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 20px;
-  margin: 20px 2px;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.info-box h3{
+  font-size: 1.8rem;
+  font-weight: 500;
+  opacity: 0.8 ;
+}
+
+.info-box h1{
+  font-size: 4rem;
+  font-weight: 600;
+}
+
+.info-box span{
+  background: linear-gradient(to right, rgb(0,157,255), rgb(255,0,255) );
+  background-clip: text;
+  color: transparent;
+  font-size: 2rem;
+}
+
+.btn-group{
+  display: flex;
+  gap: 1rem;
+}
+
+.btn{
+  border-radius: 3rem;
+  padding: 0.5rem;
+  border: 2px solid black;
   cursor: pointer;
-  border-radius: 7px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 200;
+  font-weight: 500;
+  text-wrap: nowrap;
+  transition: 0.2s ease-in-out;
+}
 
-    /* New for smooth animation */
-  transition: all 0.3s ease;
-  position: relative;
-  z-index: 2;
+.btn:hover{
+  background-color: black;
+  color: white;
+}
+
+.socials{
+  display: flex;
+  gap: 2rem;
+}
+
+.socials i{
+  font-size: 2.5rem;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.socials i:hover{
+  transform: scale(1.1);
 }
 
 
-/* Hover effect */
-.moreInfo:hover {
-  transform: scale(1.05); /* Slightly bigger */
-  box-shadow: 0 0 15px red, 0 0 25px red; /* subtle glow */
-}
-
-section {
-  background-color: whitesmoke;
-  padding: 50px;
-  text-align: center;
-  font-family: 'Inter', sans-serif;
-  font-weight: 200;
-}
-
-#about h1 {
-  font-size: 30px;
-  margin-bottom: 20px;
-}
