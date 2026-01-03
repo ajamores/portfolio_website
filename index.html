@@ -34,7 +34,7 @@
 
         <i class="fa-solid fa-bars" id="menu-icon"></i>
 
-        <button class="visit-btn">Visit Github</button>
+        <a href="https://github.com/ajamores"><button class="visit-btn">Visit Github</button></a>
     </header>
 
     <section id="hero" class="hero">
@@ -53,7 +53,7 @@
 
                 <div class="btn-group">
                     <div class="btn">Download CV</div>
-                    <div class="btn">Contact</div>
+                    <a href="mailto:armand.amores1@mohawkcollege.ca"><div class="btn">Contact</div></a>
                 </div>
 
                 <div class="socials">
@@ -249,6 +249,44 @@
 
             </div>
 
+            <div class="education-item">
+
+                <div class="left-content">
+                    <a href="https://www.credly.com/badges/68ee6339-3a1d-4fae-ae61-05fa36a5cf8d/linked_in_profile">
+                        <img src="assets/images/Microsoft_Symbol_0.svg" alt="mohawklogo" class="m-logo" >
+                    </a>
+                    <div class="vertical-line"></div>
+                </div>
+
+
+                <div class="right-content">
+                    <a href="https://www.credly.com/badges/68ee6339-3a1d-4fae-ae61-05fa36a5cf8d/linked_in_profile">Microsoft</a>
+                    <span class="role">Azure Fundamentals</span>
+                    <span class="cert">Certificate</span>
+                    <span class="dates">Nov 2024</span>
+                </div>
+
+            </div>
+
+                        <div class="education-item">
+
+                <div class="left-content">
+                    <a href="https://www.mohawkcollege.ca/programs/technology/computer-systems-technology-software-development-559">
+                        <img src="assets/images/mohawk1.jpg" alt="mohawklogo">
+                    </a>
+                    <div class="vertical-line"></div>
+                </div>
+
+
+                <div class="right-content">
+                    <a href="https://www.mohawkcollege.ca/programs/technology/computer-systems-technology-software-development-559">Mohawk College</a>
+                    <span class="role">Computer Systems Technology - Software Development</span>
+                    <span class="cert">Advanced Diploma</span>
+                    <span class="dates">Sept 2022 - Dec 2025</span>
+                </div>
+
+            </div>
+
 
 
         </div>
@@ -257,16 +295,25 @@
     <section class="projects" id="projects">
         <h1>Projects</h1>
         <div class="project-container">
-            <button class="left"><</button>
+            <button class="left"><i class="fa-solid fa-chevron-left"></i></button>
             <div class="bg"></div>
-            <div class="second-bg"></div>
             <div class="project-info active ">
-                <img src="assets/images/stockdiary3.png" alt="" >
+                <div class="image-container">
+                    <img src="assets/images/stockdiary3.png" alt="static-stockdiary" class="static-image">
+                    <img src="assets/images/stockdiarygif1.gif" alt="animated-stockdiary" class="animated-gif">
+                </div>
                 <h2>
                     Stock Diary App
                 </h2>
                 <p>Full stack investment tracking application. Record your stock purchaes like a diary</p>
                 <p> and watch your invements performance through various graphs. </p>
+                <div class="proj-tags">
+                    <p>Python</p>
+                    <p>Flask</p>
+                    <p>Bootstrap</p>
+                    <p>Javascript</p>
+                    <p>MySQL</p>
+                </div>
                 <div class="project-info-btns">
                     <a href="#"><button>View Code</button></a>
                     <a href="#"><button>Live App</button></a>
@@ -284,7 +331,7 @@
                     <i class="fa-brands fa-github"></i>
                 </div>
             </div>
-            <button class="right">></button>
+            <button class="right"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
         <button class="all-proj">View All Projects</button>
     </section>
@@ -292,16 +339,16 @@
     <section class="contact">
         <h1>Contact Me</h1>
         <div class="contact-socials">
-            <i class="fa-solid fa-envelope"></i>
-            <i class="fa-brands fa-github"></i>
-            <i class="fa-brands fa-linkedin"></i>
+            <a href="mailto:armand.amores1@mohawkcollege.ca"><i class="fa-solid fa-envelope"></i></a>
+            <a href="https://github.com/ajamores"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/armandamores/"><i class="fa-brands fa-linkedin" id="linkedin"></i></a>
         </div>
 
     </section>
 
     <footer>
         <p>&copy; 2025 Designed & Developed by Armand Amores.</p>
-        <p>Built Using basic HTML, CSS, and Javascript. All rights reserved.</p>
+        <p>Built using HTML, CSS, and Javascript. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>

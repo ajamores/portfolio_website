@@ -29,6 +29,7 @@ experienceButtons.forEach((button, index) => {
             educationItems.forEach(item=>{
                 item.style.display = 'none';
             })
+
         } else if(category ==='Education'){
 
             
@@ -39,6 +40,7 @@ experienceButtons.forEach((button, index) => {
             educationItems.forEach(item=>{
                 item.style.display='flex';
             });
+
         }
 
             button.style.backgroundColor = 'black';
