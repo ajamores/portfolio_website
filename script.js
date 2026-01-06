@@ -93,6 +93,12 @@ rightBtn.addEventListener('click' , () =>{
 });
 
 
+const navLinks = document.querySelector('.nav-links');
+const menuIcon = document.querySelector('#menu-icon');
+
+menuIcon.onclick = () => {
+    navLinks.classList.toggle('active');
+}
 
 
 
