@@ -71,6 +71,10 @@ header{
   transform:  scale(1.1);
 }
 
+#menu-icon{
+  cursor: pointer;
+}
+
 .nav-links{
   display: flex;
   gap: 2rem;
@@ -940,17 +944,27 @@ footer{
 
 }
 
-@media(max-width:600px){
+@media(max-width:400px){
   header{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 90%;
-    gap: 6rem;
+    left: 43%;
+    width: 80%;
+    gap: 2rem;
   }
 
   .hero-container{
     align-items: center;
+  }
+
+  header .logo{
+    margin-left: 2rem;
+  }
+
+  .tech-skills{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .skill{
+    min-width: 1px;
   }
 
 }
