@@ -794,6 +794,11 @@ footer{
 
 @media(max-width:600px){
 
+  .info-box h1{
+    line-height: 1.1;   /* reduces space between lines */
+    margin: 0;          /* Remove any margins */
+  }
+
   header #menu-icon{
     display: block;
     cursor: pointer;
