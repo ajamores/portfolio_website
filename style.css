@@ -767,10 +767,14 @@ footer{
 }
 
 
-@media(max-width:1994){
+@media(max-width:1707 ){
 
   .left{
-    left: 15rem;
+    left: 50rem;
+  }
+
+  .proj-tags{
+    border: 2px solid black;
   }
 
 }
@@ -935,6 +939,23 @@ footer{
 }
 
 }
+
+@media(max-width:600px){
+  header{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    gap: 6rem;
+  }
+
+  .hero-container{
+    align-items: center;
+  }
+
+}
+
+
 
 
 
