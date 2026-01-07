@@ -1057,6 +1057,17 @@ footer{
     right: -2rem;
   }
 
+  .project-info.active .proj-tags p {
+    font-size: 0.5rem;
+    border: 3px solib black;
+  }
+
+  .project-info-btns button{
+    padding: 0.3rem 1rem;
+
+  }
+
+
 
 
 }
