@@ -770,16 +770,34 @@ footer{
 
 }
 
+@media(max-width:1536px ){
 
-@media(max-width:1707 ){
 
   .left{
-    left: 50rem;
+    left: -1rem;
   }
 
-  .proj-tags{
-    border: 2px solid black;
+  .right{
+    right: -1rem;
   }
+  
+
+
+}
+
+
+@media(max-width:1377px ){
+
+
+  .left{
+    left: -1rem;
+  }
+
+  .right{
+    right: -1rem;
+  }
+  
+
 
 }
 
