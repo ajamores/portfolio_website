@@ -349,13 +349,11 @@ section .experience{
   
 }
 
+
 .education-item .vertical-line::after{
   height: 5rem;
   
 }
-
-
-
 
 
 
@@ -417,8 +415,25 @@ section .experience{
   display: none;
 }
 
+
 .left-content a img.m-logo{
   border: none;
+}
+
+/* =========================projects========================== */
+
+
+.proj-carosal{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: auto;
+    border-radius: 1rem; /* Keep only border-radius */
+    transition: all 0.3s ease;
+    height: 45rem;
+    margin-top: 2rem;
+    position: relative;
 }
 
 
@@ -429,36 +444,30 @@ section .experience{
 
 
 .project-container {
+    display: flex;
   margin-top: 4rem;
-  display: flex;
   justify-content: center;
   align-items: center;
+  height: 45rem;
+  width: 75%;
+  padding: 2rem 1%; 
   position: relative;
-  /* border: 2px solid black; */
-  min-height: 40rem;
-  min-width: 100%
-
+  flex-shrink: 1;
 
 }
 
 .left{
   cursor: pointer;
-  position: absolute;
-  left: 5rem;
   height: 7.5rem;  
   width: 7.5rem;  
   border-radius: 50%;
-  z-index: 1000;
-  padding: 0;  
-  display: flex; 
-  align-items: center;  
-  justify-content: center; 
   font-size: 1.5rem;  
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   border: none;
   background: linear-gradient(135deg, #8d9de8 0%, #bea9d2 100%);
   color: black;
   transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  margin-left: 1rem;
 }
 
 .left:hover {
@@ -470,22 +479,16 @@ section .experience{
 
 .right{
   cursor: pointer;
-  position: absolute;
-  right: 5rem;
   border-radius: 50%;
   height: 7.5rem;  
   width: 7.5rem;   
-  padding: 0;  
-  z-index: 1000;
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
   font-size: 1.5rem; 
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   border: none;
   background: linear-gradient(135deg, #8d9de8 0%, #bea9d2 100%);
   color: black;
   transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  margin-right: 1rem;
 }
 
 .right:hover {
@@ -499,12 +502,12 @@ section .experience{
 }
 
 .project-info.active{
+    display: flex;
   flex-direction: column;
   display: block;
   justify-content: center;
   align-items: center;
-  position: absolute;
-  padding: 2rem;
+  width: 100%;
 }
 
 
@@ -523,11 +526,11 @@ section .experience{
 .image-container {
   position: relative;
   width: 100%;
-  height: 23rem;
-  overflow: hidden;
+  height: 25em;
   border-radius: 0.5rem;
   margin-bottom: 1rem;
   border: 2px solid lightblue;
+  overflow: hidden;
 }
 
 /* By default, hide the animated GIF */
@@ -544,35 +547,38 @@ section .experience{
     opacity: 1;
 }
 
-/* Add this instead */
-.project-container:has(.project-info.active:hover) .bg{
-  background-color: rgb(53, 52, 52);
-  transform: scale(1.1);
-}
-
-/* Add this instead */
-.project-container:has(.project-info.active:hover) h2{
+.proj-carosal:hover h2{
   color: rgb(234, 241, 241)
 }
 
-/* Add this instead */
-.project-container:has(.project-info.active:hover) p{
+.proj-carosal:hover p{
   color: rgb(234, 241, 241)
 }
 
-
-
-.bg{
-  position: absolute;
-  background-color: white;
-  width: 85%;
-  height: 40rem;
-  border-radius: 1rem;
-  box-shadow: 5px 7px;
-  border: 2px solid lightblue;
-  transition: all 0.3s ease;
-  
+/* Add a pseudo-element for the border/background */
+.proj-carosal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid lightblue;
+    box-shadow: 5px 7px;
+    border-radius: 1rem;
+    background-color: whitesmoke; /* Initial background */
+    transition: all 0.3s ease;
+    z-index: -1; /* Send behind content */
 }
+
+/* Hover effect on pseudo-element only */
+.proj-carosal:hover::before {
+    background-color: rgb(53, 52, 52);
+    transform: scale(1.05);
+    box-shadow: 8px 10px;
+}
+
+
 
 .project-info h2{
   font-size: 2rem;
@@ -586,6 +592,7 @@ section .experience{
   margin-top: 0.5rem;
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 
 }
 
@@ -610,6 +617,7 @@ section .experience{
   margin-top: 1rem;
   display: flex;
   gap: 1.5rem;
+  margin-bottom: 1rem;
 
   
 }
@@ -674,6 +682,71 @@ section .experience{
   box-shadow: 0 10px 30px rgba(102, 126, 234, 0.6);
 }
 
+
+/* ====================== CAROUSEL INDICATORS ====================== */
+
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: none;
+    background-color: #ccc;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+    position: relative;
+}
+
+.indicator.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transform: scale(1.2);
+}
+
+.indicator:hover {
+    background-color: #999;
+    transform: scale(1.1);
+}
+
+.indicator.active:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    transform: scale(1.3);
+}
+
+/* Optional: Add a pulse animation for active indicator */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(102, 126, 234, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
+}
+
+.indicator.active {
+    animation: pulse 2s infinite;
+}
+
+/* Responsive indicators */
+@media (max-width: 768px) {
+    .carousel-indicators {
+        gap: 0.8rem;
+        margin-top: 1.5rem;
+    }
+    
+    .indicator {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+/*======================contact===========*/
+
 .contact{
   min-height: 15vh;
 }
@@ -713,21 +786,70 @@ footer{
 
 
 /* media styles */
+/* ============================================
+   MEDIA QUERIES - MOBILE FIRST APPROACH
+   ============================================ */
 
-@media(max-width: 1280px){
+  @media(max-width: 1600px) and (min-width:1377px){
+    .proj-carosal{
+      width: 100%;
+    }
+  
+  }
+
+/* Small laptops and below (1366px) */
+@media(max-width: 1376px) and (min-width:1024px){
+  .hero .hero-container{
+    gap: 5rem;
+  }
+  
+  .about .about-container{
+    gap: 5rem;
+  }
+  
+  .left{
+    height: 6rem;
+    width: 6rem;
+  }
+  
+  .right{
+    height: 6rem;
+    width: 6rem;
+  }
+
+  .tech-tag{
+    flex-wrap: wrap;
+  }
+
+  .proj-tags{
+    flex-wrap: wrap;
+  }
+
+  .proj-carosal{
+    width: 100%;
+  }
+}
+
+/* Tablets and below (1024px) */
+@media(max-width: 1024px) and (min-width:768px){
   header{
     padding: 1rem 2rem;
     gap: 2rem;
   }
 
   .hero .hero-container{
-    gap:3rem;
+    gap: 3rem;
+    flex-direction: column;
+  }
+  
+  .hero img{
+    width: 50vw;
   }
 
   .about .about-container{
     flex-direction: column;
     width: 100%;
-    
+    gap: 3rem;
   }
 
   .about h1{
@@ -735,7 +857,7 @@ footer{
     margin-bottom: 1rem;
   }
 
-  .about-container .about-info{
+  .about-info{
     width: 100%;
   }
 
@@ -743,80 +865,27 @@ footer{
     text-align: center;
   }
 
-  .projects h1{
+  #projects h1{
     text-align: center;
   }
 
-  .bg{
+
+  .proj-carosal{
+    height: 55rem;
     width: 100%;
-    height: 70vh;
   }
 
-  .left{
-    left: -4rem;
-    height: 5.5rem;  
-    width: 5.5rem;   
+  .tech-tag{
+    flex-wrap: wrap;
   }
 
-  .right{
-    right: -4rem;
-    height: 5.5rem;  
-    width: 5.5rem;   
+  .proj-tags{
+    flex-wrap: wrap;
   }
-
-  .all-proj{
-    margin-top: 5rem;
-  }
-
 }
 
-@media(max-width:1536px ){
-
-
-  .left{
-    left: -1rem;
-  }
-
-  .right{
-    right: -1rem;
-  }
-  
-
-
-}
-
-
-@media(max-width:1377px ){
-
-
-  .left{
-    left: -1rem;
-  }
-
-  .right{
-    right: -1rem;
-  }
-  
-
-
-}
-
-@media(max-width:768px){
-
-  .about-container{
-    flex-direction: column;
-  }
-
-
-}
-
-@media(max-width:600px){
-
-  .info-box h1{
-    line-height: 1.1;   /* reduces space between lines */
-    margin: 0;          /* Remove any margins */
-  }
-
+/* Mobile landscape and below (768px) */
+@media(max-width: 768px) and (min-width: 500px){
   header #menu-icon{
     display: block;
     cursor: pointer;
@@ -838,8 +907,8 @@ footer{
   }
 
   .nav-links li{
-      margin-top: 1.5rem;
-      padding: 1rem;
+    margin-top: 1.5rem;
+    padding: 1rem;
   }
 
   .nav-links.active{
@@ -847,15 +916,17 @@ footer{
   }
 
   header{
-    padding:  1rem 5rem;
-    gap: 8rem;
+    padding: 1rem 2rem;
+    gap: 2rem;
     width: 90%;
-
   }
 
   header .logo{
-    font-size: 1.5rem;
-    margin-left: 4rem;
+    font-size: 1.3rem;
+  }
+
+  .visit-btn{
+    display: none;
   }
 
   .hero-container{
@@ -866,38 +937,58 @@ footer{
     width: 60vw;
   }
 
-  .input-box input{
-    padding:  0.5rem 3rem;
-    width: 80%;
+  .info-box h1{
+    font-size: 3rem;
+    line-height: 1.1;
   }
 
-  .input-box input{
-    padding: 0.5rem;
+  .info-box h3{
+    font-size: 1.5rem;
   }
 
-  .visit-btn{
-    display: none;
+  .info-box span{
+    font-size: 1.5rem;
   }
 
-  .vertical-line::after{
-    display: none;
+  .about h1{
+    text-align: center;
+  }
+
+  .about-container{
+    flex-direction: column;
+  }
+
+  .about-info{
+    width: 100%;
+  }
+
+  .tech-skills{
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
   }
 
   .skill:hover{
     transform: scale(1);
   }
 
+  .vertical-line::after{
+    display: none;
+  }
+
   .experience-item, .education-item{
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 5rem;
-
+    margin-bottom: 3rem;
   }
 
   .left-content{
-    margin-bottom: -4rem;
+    margin-bottom: -2rem;
   }
 
+  .tech-tag{
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
 
   .experience-buttons{
     display: flex;
@@ -905,208 +996,445 @@ footer{
     justify-content: center;
     gap: 1rem;
     margin-top: 2rem;
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
   }
 
-  .image-container{
-    width: 100%;
-    height: 30vh;
-    align-items: center;
-  }
+
 
   .project-info.active h2{
-    font-size:1.2rem;
-    
+    font-size: 1.5rem;
+    word-wrap: break-word;
   }
 
-  .project-info.active p {
-    font-size: 0.9rem;
+  .project-info.active p{
+    font-size: 1rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
-  .project-info.active{
-  flex-direction: column;
-  display: block;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  width: 100%;  
-  max-width: 100%;  
-  box-sizing: border-box;  
-}
 
-.bg{
-  position: absolute;
-  background-color: white;
-  width: 100%;
-  height: 40rem;
-  border-radius: 1rem;
-  box-shadow: 5px 7px;
-  border: 2px solid lightblue;
-  transition: all 0.3s ease;
-}
-
-
-.project-info h2{
-  font-size: 2rem;
-  word-wrap: break-word;  
-}
-
-.project-info p{
-  font-size: 1.2rem;
-  word-wrap: break-word;  
-  overflow-wrap: break-word; 
-}
-
-.proj-tags{
-  flex-wrap: wrap;
-}
-
-.proj-tags button{
-  padding: 2px;
-}
-
-}
-
-@media(max-width:360px){
-
-  header{
-    width: 80%;
-    gap: 2rem;
+  .proj-tags{
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
-  .hero-container{
+  .proj-tags p{
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .project-info-btns{
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .project-info-btns button{
+    width: 100%;
+    justify-content: center;
+  }
+
+  .left{
+    height: 4.5rem;
+    width: 4.5rem;
+    font-size: 1.2rem;
+  }
+
+  .right{
+    height: 4.5rem;
+    width: 4.5rem;
+    font-size: 1.2rem;
+  }
+
+
+  .image-container{
+    height: 15rem;
+  }
+
+  .proj-carosal{
+    height: 50rem;
+  }
+
+  .carousel-indicators{
+    margin-top: 4rem;
+  }
+
+  
+
+
+
+}
+
+/* Mobile portrait (480px) */
+@media(max-width: 500px) and (min-width:360px){
+  header #menu-icon{
+    display: block;
+    cursor: pointer;
+  }
+
+  .nav-links{
+    position: absolute;
+    top: 100%;
+    margin-top: 1rem;
+    width: 100%;
+    padding: 1rem;
+    color: white;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: none;
+    border-radius: 3rem;
+  }
+
+  .hero .hero-container{
+    gap: 1rem;
+  }
+
+  .nav-links li{
+    margin-top: 1.5rem;
+    padding: 1rem;
+  }
+
+  .nav-links.active{
+    display: block;
+  }
+
+  header{
+    padding: 1rem 2rem;
+    gap: 2rem;
+    width: 90%;
   }
 
   header .logo{
-    margin-left: 2rem;
+    font-size: 1.3rem;
+  }
+
+  .visit-btn{
+    display: none;
+  }
+
+  .hero-container{
+    flex-direction: column;
+  }
+
+  .hero-container img{
+    width: 60vw;
+  }
+
+  .info-box h1{
+    font-size: 3rem;
+    line-height: 1.1;
+  }
+
+  .info-box h3{
+    font-size: 1.5rem;
+  }
+
+  .info-box span{
+    font-size: 1.5rem;
+  }
+
+  .about h1{
+    text-align: center;
   }
 
   .about-container{
-    width: 100%;
+    flex-direction: column;
   }
 
-  .about-container.tech-skills{
+  .about-info{
     width: 100%;
-    border: 10px soild rgb(35, 16, 201);
-    flex-wrap: wrap;
-
   }
-
 
   .tech-skills{
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-around;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
-  .skill{
-    width: 40%;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    flex-direction: column;
-    display: flex;
 
+  .skill i{
+    padding: 20px 15px;
+    font-size: 2.5rem;
+    min-width: 100px;
+    box-shadow: 0.5rem 0.75rem;
   }
 
   .skill p{
-    margin-top: 0;
-  }
-  .skill i{
-    transform: scale(0.5);
-    box-shadow: 0.5rem 0.5rem;
-    margin-bottom: -2rem;
-
-  }
-
-  .about-container{
-    text-align: center;
-  }
-
-
-   .experience-item, .education-item{
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 5rem;
-    flex-wrap: wrap;
-
-  }
-
-  .tech-tag{
-    flex-wrap: wrap;
-  }
-
-  .image-container{
-    width: 100%;
-    height: 20vh;
-    align-items: center;
-  }
-
-  .project-info.active h2{
-    font-size:1.2rem;
-    
-  }
-
-  .project-info.active p {
     font-size: 0.9rem;
   }
 
-  .project-info.active{
-  flex-direction: column;
-  display: block;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  width: 100%;  
-  max-width: 100%;  
-  box-sizing: border-box;  
-}
+  .experience-item {
+    display: block;
+    margin-bottom: 3rem;
+  }
 
-.bg{
-  position: absolute;
-  background-color: white;
-  width: 100%;
-  height: 40rem;
-  border-radius: 1rem;
-  box-shadow: 5px 7px;
-  border: 2px solid lightblue;
-  transition: all 0.3s ease;
-}
+  .education-item::after{
+    display: block;
+  }
 
-
-  .left, .right{
+  .left-content a img{
     width: 4rem;
     height: 4rem;
   }
 
+  .vertical-line::after{
+    display: none;
+  }
+
+  .right-content a{
+    font-size: 1.2rem;
+  }
+
+  .description-item{
+    margin-top: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .tech-tag{
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .tech-tag li{
+    font-size: 0.7rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+
+  .experience-button{
+    padding: 0.8rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .image-container{
+    height: 10rem;
+  }
+  .project-info.active{
+    padding: 1rem;
+  }
+
+  .project-info.active h2{
+    font-size: 1.2rem;
+  }
+
+  .project-info.active p{
+    font-size: 0.85rem;
+  }
+
   .left{
-    left: -2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1rem;
   }
 
   .right{
-    right: -2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1rem;
   }
 
-  .project-info.active .proj-tags p {
-    font-size: 0.5rem;
-    border: 3px solib black;
+  .proj-tags{
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .proj-tags p{
+    font-size: 0.7rem;
+    padding: 0.4rem 0.8rem;
   }
 
   .project-info-btns button{
-    padding: 0.3rem 1rem;
-
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
   }
 
+  .all-proj{
+    padding: 1rem 2rem;
+    font-size: 1rem;
+  }
 
+  .carousel-indicators{
+    margin-top: 5rem;
+  }
 
+  .contact-socials a i{
+    font-size: 2.5rem;
+    padding-right: 40px;
+  }
 
+  footer{
+    font-size: 0.9rem;
+  }
 }
 
+/* Extra small phones (360px) */
+@media(max-width: 360px){
+  header #menu-icon{
+    display: block;
+    cursor: pointer;
+  }
+
+  .nav-links{
+    position: absolute;
+    top: 100%;
+    margin-top: 1rem;
+    width: 100%;
+    padding: 1rem;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: none;
+    border-radius: 3rem;
+  }
+
+  .hero .hero-container{
+    gap: 1rem;
+  }
+
+  .nav-links li{
+    margin-top: 1.5rem;
+    padding: 1rem;
+  }
+
+  .nav-links.active{
+    display: block;
+  }
+
+  header{
+    padding: 1rem 2rem;
+    gap: 2rem;
+    width: 90%;
+  }
+
+  header .logo{
+    font-size: 1.3rem;
+  }
+
+  .visit-btn{
+    display: none;
+  }
+
+  .hero-container{
+    flex-direction: column;
+  }
+
+  .hero-container img{
+    width: 60vw;
+  }
+
+  .info-box h1{
+    font-size: 3rem;
+    line-height: 1.1;
+  }
+
+  .info-box h3{
+    font-size: 1.5rem;
+  }
+
+  .info-box span{
+    font-size: 1.5rem;
+  }
+
+  .about h1{
+    text-align: center;
+  }
+
+  .about-container{
+    flex-direction: column;
+  }
+
+  .about-info{
+    width: 100%;
+  }
+
+  .tech-skills{
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .skill i{
+    padding: 15px 10px;
+    font-size: 2rem;
+    min-width: 80px;
+  }
+
+  .experience-buttons{
+    display: flex;
+    gap: 1rem;
+  }
+
+  .experience-item{
+    display: block;
+  }
+
+  .vertical-line::after{
+    display: none;
+  }
+
+  .tech-tag{
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tech-tag li{
+    font-size: 0.65rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .image-container{
+    height: 18vh;
+  }
+
+  .project-info.active h2{
+    font-size: 1rem;
+  }
+
+  .project-info.active p{
+    font-size: 0.75rem;
+  }
+
+  .left{
+    width: 3rem;
+    height: 3rem;
+    font-size: 0.9rem;
+  }
+
+  .right{
+    width: 3rem;
+    height: 3rem;
+    font-size: 0.9rem;
+  }
+
+  .proj-tags{
+    flex-wrap: wrap;
+    gap: 0.3rem;
+  }
+
+  .proj-tags p{
+    font-size: 0.65rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .project-info-btns{
+    display: block;
+  }
+
+  .proj-carosal{
+    width: 100%;
+  }
+
+  .carousel-indicators{
+    margin-top: 4rem;
+  }
+
+  .project-info-btns button{
+    width: 12rem;
+    text-align: center;
+  }
+
+  
+}
 
 
 
