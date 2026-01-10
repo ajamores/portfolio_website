@@ -1216,7 +1216,6 @@ footer{
   }
 
 
-
   .experience-button{
     padding: 0.8rem 1.2rem;
     font-size: 0.9rem;
@@ -1232,10 +1231,14 @@ footer{
   }
   .project-info.active{
     padding: 1rem;
+    justify-content: center;
+    display: flex;
   }
+
 
   .project-info.active h2{
     font-size: 1.2rem;
+    align-self: start;
   }
 
   .project-info.active p{
@@ -1394,9 +1397,7 @@ footer{
     gap: 1rem;
   }
 
-  .experience-item{
-    display: block;
-  }
+  
 
   .vertical-line::after{
     display: none;
