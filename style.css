@@ -871,8 +871,17 @@ footer{
 
 
   .proj-carosal{
-    height: 55rem;
+    height: 50rem;
     width: 100%;
+  }
+
+  .image-container{
+    height: 15rem;
+  }
+
+  .left, .right{
+    width: 4.5rem;
+    height: 4.5rem;
   }
 
   .tech-tag{
