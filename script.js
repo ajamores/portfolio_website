@@ -32,7 +32,6 @@ experienceButtons.forEach((button, index) => {
             })
 
         } else if(category ==='Education'){
-            console.log("changing to EDUCATION")
             
             experienceItems.forEach(item=>{
                 item.style.display = 'none';

@@ -929,6 +929,10 @@ footer{
     display: none;
   }
 
+  .hero .hero-container{
+    gap:2rem
+  }
+
   .hero-container{
     flex-direction: column;
   }
@@ -1136,6 +1140,7 @@ footer{
 
   .about h1{
     text-align: center;
+    margin-bottom: 1rem;
   }
 
   .about-container{
@@ -1160,6 +1165,11 @@ footer{
 
   .skill p{
     font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .experience-content{
+    display: block;
   }
 
   .experience-item {
@@ -1167,9 +1177,6 @@ footer{
     margin-bottom: 3rem;
   }
 
-  .education-item::after{
-    display: block;
-  }
 
   .left-content a img{
     width: 4rem;
@@ -1200,9 +1207,15 @@ footer{
   }
 
 
+
   .experience-button{
     padding: 0.8rem 1.2rem;
     font-size: 0.9rem;
+  }
+
+  .proj-carosal{
+    height: 40rem;
+
   }
 
   .image-container{
@@ -1221,15 +1234,13 @@ footer{
   }
 
   .left{
-    width: 3.5rem;
-    height: 3.5rem;
-    font-size: 1rem;
+    width:2.5rem;
+    height: 2.5rem;
   }
 
   .right{
-    width: 3.5rem;
-    height: 3.5rem;
-    font-size: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   .proj-tags{
@@ -1242,9 +1253,18 @@ footer{
     padding: 0.4rem 0.8rem;
   }
 
+
+  .project-info-btns{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
   .project-info-btns button{
     padding: 0.7rem 1rem;
     font-size: 0.9rem;
+    justify-content: center;
+    width: 15rem;
+
   }
 
   .all-proj{
@@ -1351,6 +1371,7 @@ footer{
   .tech-skills{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   .skill i{
@@ -1382,9 +1403,15 @@ footer{
     padding: 0.3rem 0.6rem;
   }
 
-  .image-container{
-    height: 18vh;
+
+  .project-container{
+    margin: auto;
+    height: 40rem;
   }
+  .left, .right{
+    display: none;
+  }
+ 
 
   .project-info.active h2{
     font-size: 1rem;
@@ -1394,17 +1421,7 @@ footer{
     font-size: 0.75rem;
   }
 
-  .left{
-    width: 3rem;
-    height: 3rem;
-    font-size: 0.9rem;
-  }
 
-  .right{
-    width: 3rem;
-    height: 3rem;
-    font-size: 0.9rem;
-  }
 
   .proj-tags{
     flex-wrap: wrap;
@@ -1417,8 +1434,14 @@ footer{
   }
 
   .project-info-btns{
-    display: block;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    width: 90%;
+    justify-content: center;
   }
+
+
 
   .proj-carosal{
     width: 100%;
@@ -1429,7 +1452,11 @@ footer{
   }
 
   .project-info-btns button{
-    width: 12rem;
+    width: 15rem;
+    text-align: center;
+  }
+
+  .project-info-btns a button{
     text-align: center;
   }
 
