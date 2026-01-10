@@ -1456,8 +1456,17 @@ footer{
     width: 100%;
   }
 
+  .project-container{
+    width: 100%;
+  }
+
   .carousel-indicators{
     margin-top: 4rem;
+  }
+
+  .project-info-btns{
+    align-items: center;
+    margin-top: 1rem;
   }
 
   .project-info-btns button{
