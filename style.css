@@ -994,9 +994,6 @@ footer{
     margin-bottom: 3rem;
   }
 
-  .left-content{
-    margin-bottom: -2rem;
-  }
 
   .tech-tag{
     flex-wrap: wrap;
@@ -1480,6 +1477,10 @@ footer{
   }
 
   
+}
+
+@media(max-width: 360px) and (min-width:200px){
+
 }
 
 
