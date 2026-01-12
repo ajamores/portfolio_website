@@ -805,6 +805,15 @@ footer{
   
   .about .about-container{
     gap: 5rem;
+    flex-direction: column;
+  }
+
+  .about-info{
+    width: 100%;
+  }
+
+  .about h1{
+    margin-bottom: 1rem;
   }
   
   .left{
